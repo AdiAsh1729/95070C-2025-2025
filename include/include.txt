@@ -1,0 +1,39 @@
+In PID.h -> class PID(line 5) -> double startIntegral(line 12)
+
+When to start calculating integral
+
+
+
+In PID.h -> class PID(line 5) -> double deadband(line 17)
+
+How far off you can be
+
+
+
+In PID.h -> class PID(line 5) -> double startTime(line 18)
+
+When to start calculating the time the robot has spent around target
+
+
+
+In PID.h -> class PID(line 5) -> double timeTaken(line 19)
+
+Time the robot has spent around the target
+
+
+
+In PID.h -> class PID(line 5) -> double timeGiven(line 20)
+
+Time the robot is allowed to spend around the target
+
+
+
+In PID.h -> class PID(line 5) -> double motorOutput(line 21)
+
+How much power your motor is spinning at
+
+
+
+In PID.h -> class PID(line 5) -> double powerGiven(line 22)
+
+How much power your motor is allowed to spin at

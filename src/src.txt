@@ -1,0 +1,24 @@
+In util.cpp -> double getTurnError(line 3) -> if statement(line 4):
+    
+if(target > heading && target - heading <= 180) {
+    return target - heading;
+}
+
+if(heading > target && heading - target <= 180) {
+    return target - heading;
+}
+
+
+In util.cpp -> double getTurnError(line 3) -> else statement(line 8) -> if statement(line 9):
+
+if(target > heading && target - heading > 180) {
+    return -(-target + (heading + 360)); // = target - heading - 360
+}
+
+
+
+In util.cpp -> double getTurnError(line 3) -> else statement(line 8) -> else statement(line 13):
+
+if(heading > target && heading - target > 180) {
+    return target - heading + 360;
+}
