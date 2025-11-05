@@ -1,3 +1,21 @@
-/bin
-/build
+#/bin
+#/build
+#compile_commands.json*/
+
+# VSCode settings
+.vscode/
+
+# Build outputs
+/bin/
+/build/
+/vex/*.o
+/vex/*.elf
+/vex/*.bin
+
+# Temporary files
+*.log
+*.tmp
+*.swp
+
+# Compile commands
 compile_commands.json
