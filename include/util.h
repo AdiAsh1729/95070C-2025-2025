@@ -7,5 +7,3 @@ using namespace vex;
 
 double getSign(double input);
 double getTurnError(double heading, double target);
-double getGreaterArcDist(double distToCenter, double heading, double radius, double targetHeading);
-double getLesserArcDist(double distToCenter, double heading, double radius, double targetHeading);
