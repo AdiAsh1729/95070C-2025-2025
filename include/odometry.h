@@ -22,4 +22,4 @@ class Odometry {
         void setPosition(double xCoordinate, double yCoordinate, double globalOrientation);
 
         void updatePosition(double horizontalTrackerPosition, double verticalTrackerPosition, double globalOrientation);
-}
+};
