@@ -122,7 +122,6 @@ void driverControl() {
 }
 
 int main() {
-    chassis.driveDistanceSlow(24);
     preAuton(); // Calibrate Inertial sensor, select auton, select driver
     Competition.drivercontrol(driverControl); // If switch is in Driver Control run DriverControl
     Competition.autonomous(autonomous); // If switch is autonomosu run autonomous

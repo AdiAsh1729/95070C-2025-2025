@@ -68,15 +68,9 @@ void runArcadeDrive(motor_group& LeftDrive, motor_group& RightDrive, inertial& I
     double TurnSpeed = (Controller.Axis1.position()) * scaleTurnSpeed * buttonScaleSpeed;
     LeftDrive.setStopping(coast);
     RightDrive.setStopping(coast);
-    if((LeftDrive.velocity(pct) > 0 && RightDrive.velocity(pct) == 0) || (LeftDrive.velocity(pct) == 0 && RightDrive.velocity(pct) > 0)) {
-        LeftDrive.setVelocity(0, pct);
-        RightDrive.setVelocity(0, pct);
-    }
 
-    else {
-        LeftDrive.setVelocity((DriveSpeed + TurnSpeed), pct);
-        RightDrive.setVelocity((DriveSpeed - TurnSpeed), pct);
-    }
+    LeftDrive.setVelocity((DriveSpeed + TurnSpeed), pct);
+    RightDrive.setVelocity((DriveSpeed - TurnSpeed), pct);
 
     if(LeftDrive.velocity(pct) > 0 && RightDrive.velocity(pct) > 0) {
     std::cout << LeftDrive.velocity(pct) << ", " << RightDrive.velocity(pct) << std::endl;

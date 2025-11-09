@@ -95,7 +95,7 @@ void LeftElim() {
 }
 
 void SoloAWP() {
-
+    chassis.driveDistance(48);
 }
 
 void AutonSkills() {
