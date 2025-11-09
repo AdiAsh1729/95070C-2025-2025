@@ -66,6 +66,7 @@ void runArcadeDrive(motor_group& LeftDrive, motor_group& RightDrive, controller&
     }
     double DriveSpeed = (Controller.Axis3.position()) * scaleDriveSpeed * buttonScaleSpeed;
     double TurnSpeed = (Controller.Axis1.position()) * scaleTurnSpeed * buttonScaleSpeed;
+    
     LeftDrive.setStopping(coast);
     RightDrive.setStopping(coast);
 
