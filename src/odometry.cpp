@@ -13,3 +13,7 @@ void Odometry::setPosition(double xCoordinate, double yCoordinate, double global
     this->yCoordinate = yCoordinate;
     this->globalOrientation = globalOrientation;
 }
+
+void Odometry::updatePosition(double horizontalTrackerPosition, double verticalTrackerPosition, double globalOrientation) {
+    
+}

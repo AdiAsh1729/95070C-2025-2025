@@ -21,9 +21,9 @@ double getTurnError(double heading, double targetHeading) {
 }
 
 double degreesToRadians(double degrees) {
-    return degrees * 180 / M_PI;
+    return degrees * M_PI / 180;
 }
 
 double radiansToDegrees(double radians) {
-    return radians * M_PI / 180;
+    return radians * 180 / M_PI;
 }

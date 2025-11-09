@@ -1,12 +1,11 @@
 #include "PID.h"
 
-PID::PID(double startError, double error, double kp, double ki, double kd, double ks, double startIntegral, double integral, double derivative, double previousError, double deadband, double previousMotorOutput, double motorOutput):
+PID::PID(double startError, double error, double kp, double ki, double kd, double startIntegral, double integral, double derivative, double previousError, double deadband, double previousMotorOutput, double motorOutput):
     startError(startError),
     error(error),
     kp(kp),
     ki(ki),
     kd(kd),
-    ks(ks),
     startIntegral(startIntegral),
     integral(integral),
     derivative(derivative),
@@ -17,7 +16,7 @@ PID::PID(double startError, double error, double kp, double ki, double kd, doubl
 {};
 
 bool PID::settled() {
-    if((std::abs(this->error) < deadband) || std::abs(this->motorOutput) < 0.5) { //checks if the absolute value of the error is less than the deadband: in other words, it checks if the robot is close enough
+    if((std::abs(this->error) < deadband)) { //checks if the absolute value of the error is less than the deadband: in other words, it checks if the robot is close enough
         return true;
     }
 
@@ -39,7 +38,7 @@ double PID::output() {
 
     this->previousError = this->error;
 
-    this->motorOutput = this->error * this->kp + this->integral * this->ki + this->derivative * this->kd + getSign(this->error) * this->ks;
+    this->motorOutput = this->error * this->kp + this->integral * this->ki + this->derivative * this->kd;
 
     this->previousMotorOutput = this->motorOutput;
 
