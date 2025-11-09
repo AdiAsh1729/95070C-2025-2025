@@ -7,7 +7,7 @@
 
 competition Competition;
 
-Drivetrain chassis(Brain, LeftDrive, RightDrive, Inertial, 0.75, 3.25);
+Drivetrain chassis(Brain, LeftDrive, RightDrive, Inertial, 1, 4);
 
 void preAuton(void) {
     vexcodeInit();
@@ -122,6 +122,7 @@ void driverControl() {
 }
 
 int main() {
+    chassis.driveDistanceSlow(24);
     preAuton(); // Calibrate Inertial sensor, select auton, select driver
     Competition.drivercontrol(driverControl); // If switch is in Driver Control run DriverControl
     Competition.autonomous(autonomous); // If switch is autonomosu run autonomous

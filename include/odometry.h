@@ -13,7 +13,6 @@ class Odometry {
         double previousGlobalOrientation;
 
     public:
-        Odometry(double verticalToCenterDistance);
         Odometry(double horizontalToCenterDistance, double verticalToCenterDistance);
 
         double xCoordinate;
@@ -22,6 +21,5 @@ class Odometry {
 
         void setPosition(double xCoordinate, double yCoordinate, double globalOrientation);
 
-        void updatePosition(double verticalTrackerPosition, double globalOrientation);
         void updatePosition(double horizontalTrackerPosition, double verticalTrackerPosition, double globalOrientation);
 }

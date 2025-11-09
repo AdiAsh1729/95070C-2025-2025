@@ -10,8 +10,8 @@ Drivetrain::Drivetrain(brain& Brain, motor_group& LeftDrive, motor_group& RightD
 {};
 
 void Drivetrain::driveDistance(double targetDistance) {
-    PID driveLeftPID(targetDistance, targetDistance, 0, 0, 0, 3, targetDistance/5, 0, 0, targetDistance, 0.2, 0, 0);
-    PID driveRightPID(targetDistance, targetDistance, 0, 0, 0, 3, targetDistance/5, 0, 0, targetDistance, 0.2, 0, 0);
+    PID driveLeftPID(targetDistance, targetDistance, 0, 0, 0, 0, targetDistance/5, 0, 0, targetDistance, 0.2, 0, 0);
+    PID driveRightPID(targetDistance, targetDistance, 0, 0, 0, 0, targetDistance/5, 0, 0, targetDistance, 0.2, 0, 0);
     LeftDrive.resetPosition();
     RightDrive.resetPosition();
 
@@ -31,8 +31,8 @@ void Drivetrain::driveDistance(double targetDistance) {
 };
 
 void Drivetrain::driveDistanceSlow(double targetDistance) {
-    PID driveLeftPID(targetDistance, targetDistance, 0, 0, 0, 3, targetDistance/5, 0, 0, targetDistance, 0.1, 0, 0);
-    PID driveRightPID(targetDistance, targetDistance, 0, 0, 0, 3, targetDistance/5, 0, 0, targetDistance, 0.1, 0, 0);
+    PID driveLeftPID(targetDistance, targetDistance, 0.7, 0, 0, 0, targetDistance/5, 0, 0, targetDistance, 0.1, 0, 0);
+    PID driveRightPID(targetDistance, targetDistance, 0.7, 0, 0, 0, targetDistance/5, 0, 0, targetDistance, 0.1, 0, 0);
 
     LeftDrive.resetPosition();
     RightDrive.resetPosition();
@@ -41,6 +41,8 @@ void Drivetrain::driveDistanceSlow(double targetDistance) {
         //Brain.Timer.clear();
         driveLeftPID.error = driveLeftPID.startError - LeftDrive.position(turns) * (this->wheelDiameter) * M_PI * (this->gearRatio);
         driveRightPID.error = driveRightPID.startError - RightDrive.position(turns) * (this->wheelDiameter) * M_PI * (this->gearRatio);
+
+        std::cout << driveLeftPID.motorOutput << ", " << driveRightPID.motorOutput << std::endl;
         
         driveLeftPID.motorOutput = driveLeftPID.output();
         driveRightPID.motorOutput = driveRightPID.output();

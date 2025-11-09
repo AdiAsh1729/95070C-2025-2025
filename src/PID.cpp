@@ -17,7 +17,7 @@ PID::PID(double startError, double error, double kp, double ki, double kd, doubl
 {};
 
 bool PID::settled() {
-    if((std::abs(this->error) < deadband)) { //checks if the absolute value of the error is less than the deadband: in other words, it checks if the robot is close enough
+    if((std::abs(this->error) < deadband) || std::abs(this->motorOutput) < 0.5) { //checks if the absolute value of the error is less than the deadband: in other words, it checks if the robot is close enough
         return true;
     }
 
