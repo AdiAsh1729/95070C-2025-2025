@@ -5,7 +5,7 @@
 #include "pressed.h"
 #include <iostream>
 
-competition Competition
+competition Competition;
 
 Drivetrain chassis(Brain, LeftDrive, RightDrive, Inertial, 0.75, 3.25);
 
