@@ -1,6 +1,6 @@
 #include "PID.h"
 
-PID::PID(double startError, double error, double kp, double ki, double kd, double startIntegral, double integral, double derivative, double previousError, double deadband, double previousMotorOutput, double motorOutput):
+PID::PID(double startError, double error, double kp, double ki, double kd, double startIntegral, double integral, double derivative, double previousError, double deadband, double motorOutput):
     startError(startError),
     error(error),
     kp(kp),
@@ -11,7 +11,6 @@ PID::PID(double startError, double error, double kp, double ki, double kd, doubl
     derivative(derivative),
     previousError(previousError),
     deadband(deadband),
-    previousMotorOutput(previousMotorOutput),
     motorOutput(motorOutput)
 {};
 
@@ -39,8 +38,6 @@ double PID::output() {
     this->previousError = this->error;
 
     this->motorOutput = this->error * this->kp + this->integral * this->ki + this->derivative * this->kd;
-
-    this->previousMotorOutput = this->motorOutput;
 
     if(std::abs(this->motorOutput) > 99.9) {
         return getSign(this->motorOutput) * 99.9;
