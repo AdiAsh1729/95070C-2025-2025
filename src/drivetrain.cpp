@@ -57,7 +57,7 @@ void Drivetrain::driveDistanceSlow(double targetDistance) {
 };
 
 void Drivetrain::turnToHeading(double targetHeading) {
-    PID turnPID(targetHeading, targetHeading, 0.2, 0, 0, 0, targetHeading/5, 0, 0, targetHeading, 3, 0);
+    PID turnPID(targetHeading, targetHeading, 0.2, 0, 0, targetHeading/5, 0, 0, targetHeading, 3, 0);
 
     do {
         turnPID.error = getTurnError(Inertial.heading(), targetHeading);
