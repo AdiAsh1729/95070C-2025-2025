@@ -10,8 +10,8 @@ Drivetrain::Drivetrain(brain& Brain, motor_group& LeftDrive, motor_group& RightD
 {};
 
 void Drivetrain::driveDistance(double targetDistance) {
-    PID driveLeftPID(targetDistance, targetDistance, 0, 0, 0, 3, targetDistance/5, 0, 0, targetDistance, 0.2, 0, 0);
-    PID driveRightPID(targetDistance, targetDistance, 0, 0, 0, 3, targetDistance/5, 0, 0, targetDistance, 0.2, 0, 0);
+    PID driveLeftPID(targetDistance, targetDistance, 1.5, 0.0015, 0.65, 3, targetDistance/5, 0, 0, targetDistance, 0.2, 0, 0);
+    PID driveRightPID(targetDistance, targetDistance, 0, 0.0015, 0.65, 3, targetDistance/5, 0, 0, targetDistance, 0.2, 0, 0);
     LeftDrive.resetPosition();
     RightDrive.resetPosition();
 
@@ -31,8 +31,8 @@ void Drivetrain::driveDistance(double targetDistance) {
 };
 
 void Drivetrain::driveDistanceSlow(double targetDistance) {
-    PID driveLeftPID(targetDistance, targetDistance, 0, 0, 0, 3, targetDistance/5, 0, 0, targetDistance, 0.1, 0, 0);
-    PID driveRightPID(targetDistance, targetDistance, 0, 0, 0, 3, targetDistance/5, 0, 0, targetDistance, 0.1, 0, 0);
+    PID driveLeftPID(targetDistance, targetDistance, 0.75, 0, 0.1, 3, targetDistance/5, 0, 0, targetDistance, 0.1, 0, 0);
+    PID driveRightPID(targetDistance, targetDistance, 0.75, 0, 0.1, 3, targetDistance/5, 0, 0, targetDistance, 0.1, 0, 0);
 
     LeftDrive.resetPosition();
     RightDrive.resetPosition();

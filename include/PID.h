@@ -5,7 +5,7 @@
 #include <iostream>
 
 class PID {
-    private:
+    public:
         double startError; //error at the start of the PID
         double error; //current error
         double kp; //the constant we multiply our error by: we tune this
@@ -21,8 +21,7 @@ class PID {
         double deadband; //how far off we can be from our target: we will never perfectly achieve our target, so we need this
         double previousMotorOutput; //how fast our motors ran in the previous loop
         double motorOutput; //how fast our motors will spin this loop
-
-    public:
+        
         PID(double startError, double error, double kp, double ki, double kd, double ks, double startIntegral, double integral, double derivative, double previousError, double deadband, double previousMotorOutput, double motorOutput); //our constructor, what we use to create our object
 
         void print(); //a function which prints the error, motor output, previous error, and previous motor output

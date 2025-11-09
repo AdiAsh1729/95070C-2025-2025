@@ -5,7 +5,7 @@
 #include "pressed.h"
 #include <iostream>
 
-competition Competition;
+competition Competition
 
 Drivetrain chassis(Brain, LeftDrive, RightDrive, Inertial, 0.75, 3.25);
 
@@ -105,7 +105,7 @@ void autonomous() {
 void driverControl() {
     if(!RunningPreAuton) {
         while(true) {
-            /*if(pressed(Controller.ButtonA, A)) {
+            if(pressed(Controller.ButtonA, A)) {
                 descore_middleGoal();
             }
             if(pressed(Controller.ButtonX, X)) {
@@ -113,7 +113,7 @@ void driverControl() {
             }
             if(pressed(Controller.ButtonLeft, Left)) {
                 doublePark();
-            }*/
+            }
             moveIntake();
             moveDrivetrain();
             wait(20, msec);
@@ -124,7 +124,7 @@ void driverControl() {
 int main() {
     preAuton(); // Calibrate Inertial sensor, select auton, select driver
     Competition.drivercontrol(driverControl); // If switch is in Driver Control run DriverControl
-    Competition.autonomous(autonomous); // If switch is autonomosu run autonomous
+    Competition.autonomous(autonomous); // If switch is autonomous run autonomous
 
     while(true) {
         wait(20, msec);

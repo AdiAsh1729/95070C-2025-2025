@@ -8,9 +8,9 @@
 #include "util.h"
 using namespace vex;
 
-/*inline int DMPressed = 0;
+inline int DMPressed = 0;
 inline int MatchloadPressed = 0;
-inline int ParkPressed = 0;*/
+inline int ParkPressed = 0;
 
 void runIfPressingMotor(motor&, controller::button&, controller::button&, int);
 void runIfPressingMotorGroup(motor_group&, controller::button&, controller::button&, int);
