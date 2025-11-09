@@ -22,7 +22,7 @@ digital_out Park = digital_out(Brain.ThreeWirePort.G); //the pneumatics controll
 
 inertial Inertial = inertial(PORT16); //our inertial sensor*/
 
-motor FL = motor(PORT11, ratio18_1, true); //our front left motor
+motor FL = motor(PORT12, ratio18_1, true); //our front left motor
 motor BL = motor(PORT1, ratio18_1, true); //our back left motor
 motor_group LeftDrive = motor_group(FL, BL); //a motor group consisting of the motors on the left side of our drivetrain
 motor FR = motor(PORT15, ratio18_1, false); //our front right motor
