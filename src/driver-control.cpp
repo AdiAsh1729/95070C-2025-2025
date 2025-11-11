@@ -116,6 +116,7 @@ void moveIntake() {
     switch(CurrentDriver) {
         case Daniel:
             runIfPressedMotor(Intake1, Controller.ButtonR2, Controller.ButtonR1, Controller.ButtonB, 99);
+            //runIfPressedMotor(Intake2, Controller.ButtonY, Controller.ButtonR2, Controller.ButtonB, 25);
             runIfPressedMotorGroup(Intake, Controller.ButtonL2, Controller.ButtonUp, Controller.ButtonB, 99);
             break;
 

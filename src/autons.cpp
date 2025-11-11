@@ -99,6 +99,16 @@ void SoloAWP() {
 }
 
 void AutonSkills() {
+    /*Matchloader.set(false);
+    chassis.driveDistance(36);
+    chassis.turnToHeading(270);
+    Matchloader.set(true);
+    Intake.spin(forward);
+    chassis.driveDistanceSlow(8);
+    wait(10, sec);
+    chassis.driveDistanceSlow(-8);
+    chassis.turnToHeading(0);
+    chassis.driveDistance(36);*/
     chassis.driveDistance(-6);
     Matchloader.set(true);
     LeftDrive.spin(forward, 90, pct);
