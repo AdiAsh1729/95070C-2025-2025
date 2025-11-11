@@ -70,8 +70,8 @@ void runArcadeDrive(motor_group& LeftDrive, motor_group& RightDrive, controller&
     LeftDrive.setStopping(coast);
     RightDrive.setStopping(coast);
 
-    LeftDrive.setVelocity((DriveSpeed - TurnSpeed), pct);
-    RightDrive.setVelocity((DriveSpeed + TurnSpeed), pct);
+    LeftDrive.setVelocity((DriveSpeed + TurnSpeed), pct);
+    RightDrive.setVelocity((DriveSpeed - TurnSpeed), pct);
 
     LeftDrive.spin(forward);
     RightDrive.spin(forward);

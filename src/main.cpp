@@ -7,7 +7,7 @@
 
 competition Competition;
 
-Drivetrain chassis(Brain, LeftDrive, RightDrive, Inertial, 1, 4);
+Drivetrain chassis(Brain, LeftDrive, RightDrive, HorizontalTracker, Inertial, 1, 4, 2.75, 6.7);
 
 void preAuton(void) {
     vexcodeInit();
@@ -122,7 +122,7 @@ void driverControl() {
 }
 
 int main() {
-    chassis.driveDistance(24);
+    std::cout << "Main started!" << std::endl;
     preAuton(); // Calibrate Inertial sensor, select auton, select driver
     Competition.drivercontrol(driverControl); // If switch is in Driver Control run d+
     // riverControl

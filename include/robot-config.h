@@ -17,6 +17,10 @@ extern motor MR;
 extern motor BR;
 extern motor_group RightDrive;
 
+extern inertial Inertial;
+
+extern rotation HorizontalTracker;
+
 extern motor Intake1;
 extern motor Intake2;
 extern motor_group Intake;
@@ -24,7 +28,5 @@ extern motor_group Intake;
 extern digital_out Descore_MiddleGoal;
 extern digital_out Matchloader;
 extern digital_out Park;
-
-extern inertial Inertial;
 
 void vexcodeInit(void);

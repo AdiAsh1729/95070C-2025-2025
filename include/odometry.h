@@ -4,13 +4,11 @@
 
 class Odometry {
     private:
-        double horizontalWheelDiameter;
-        double verticalWheelDiameter;
         double horizontalToCenterDistance;
         double verticalToCenterDistance;
-        double previousGlobalHorizontal;
-        double previousGlobalVertical;
-        double previousGlobalOrientation;
+        double previousHorizontalTrackerPosition;
+        double previousVerticalTrackerPosition;
+        double previousGlobalOrientationRadians;
 
     public:
         Odometry(double horizontalToCenterDistance, double verticalToCenterDistance);
@@ -21,5 +19,5 @@ class Odometry {
 
         void setPosition(double xCoordinate, double yCoordinate, double globalOrientation);
 
-        void updatePosition(double horizontalTrackerPosition, double verticalTrackerPosition, double globalOrientation);
+        void updatePosition(double horizontalTrackerPosition, double verticalTrackerPosition, double globalOrientation); //tracker positions will be in inches
 };
