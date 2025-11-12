@@ -10,8 +10,8 @@ Drivetrain::Drivetrain(brain& Brain, motor_group& LeftDrive, motor_group& RightD
 {};
 
 void Drivetrain::driveDistance(double targetDistance) {
-    PID driveLeftPID(targetDistance, targetDistance, 0, 0, 0, targetDistance/5, 0, 0, targetDistance, 0.2, 0);
-    PID driveRightPID(targetDistance, targetDistance, 0, 0, 0, targetDistance/5, 0, 0, targetDistance, 0.2, 0);
+    PID driveLeftPID(targetDistance, targetDistance, 2.2, 0.04, 0, targetDistance/5, 0, 0, targetDistance, 0.2, 0);
+    PID driveRightPID(targetDistance, targetDistance, 2.2, 0.045, 0, targetDistance/5, 0, 0, targetDistance, 0.2, 0);
     LeftDrive.resetPosition();
     RightDrive.resetPosition();
 
@@ -57,7 +57,7 @@ void Drivetrain::driveDistanceSlow(double targetDistance) {
 };
 
 void Drivetrain::turnToHeading(double targetHeading) {
-    PID turnPID(targetHeading, targetHeading, 0.1, 0, 0, targetHeading/5, 0, 0, targetHeading, 3, 0);
+    PID turnPID(targetHeading, targetHeading, 0.367, 0, 0, targetHeading/5, 0, 0, targetHeading, 3, 0);
 
     do {
         turnPID.error = getTurnError(Inertial.heading(), targetHeading);

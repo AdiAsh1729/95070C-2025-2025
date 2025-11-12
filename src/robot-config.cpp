@@ -20,7 +20,7 @@ digital_out Descore_MiddleGoal = digital_out(Brain.ThreeWirePort.G); //the pneum
 digital_out Matchloader = digital_out(Brain.ThreeWirePort.A); //the pneumatics controlling our matchloader
 digital_out Park = digital_out(Brain.ThreeWirePort.H); //the pneumatics controlling our double park mechanism
 
-inertial Inertial = inertial(PORT2); //our inertial sensor
+inertial Inertial = inertial(PORT16); //our inertial sensor
 
 void vexcodeInit(void) {
 
