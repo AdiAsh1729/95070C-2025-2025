@@ -91,11 +91,11 @@ void RightElim() {
 }
 
 void LeftElim() {
-
+    chassis.turnToHeading(180);
 }
 
 void SoloAWP() {
-
+    chassis.driveDistance(48);
 }
 
 void AutonSkills() {
