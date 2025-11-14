@@ -185,21 +185,13 @@ void Drivetrain::driveToPoint(double targetX, double targetY) {
 
     do {
         xDelta = targetX - odometry.xCoordinate;
-        std::cout << xDelta << std::endl;
         yDelta = targetY - odometry.yCoordinate;
-        std::cout << yDelta << std::endl;
         
         targetDistance = sqrt(pow(xDelta, 2) + pow(yDelta, 2));
-        std::cout << targetDistance << std::endl;
         targetHeading = radiansToDegrees(atan2(yDelta, xDelta));
-        std::cout << targetHeading << std::endl;
 
-        if(getTurnError(Inertial.heading(), targetHeading) > 3) {
-            this->turnToHeading(targetHeading);
-        }
+        
+    } while(std::abs(xDelta) >= 0.2 || std::abs(yDelta) >= 0.2);
 
-        else {
-            this->driveDistanceSlow(targetDistance);
-        }
-    } while(std::abs(xDelta) >= 1.5 || std::abs(yDelta) >= 1.5);
+
 };

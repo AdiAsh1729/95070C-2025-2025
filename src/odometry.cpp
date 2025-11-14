@@ -21,24 +21,26 @@ void Odometry::updatePosition(double horizontalTrackerPosition, double verticalT
     double globalOrientationRadians = degreesToRadians(this->globalOrientation);
     double globalOrientationDeltaRadians = globalOrientationRadians - this->previousGlobalOrientationRadians;
 
-    double localXOffset = 0;
-    double localYOffset = 0;
+    double localXOffset = 0.0;
+    double localYOffset = 0.0;
 
-    double localPolarAngle = 0;
-    double globalPolarAngle = 0;
-    double polarLength = 0;
+    double localPolarAngle = 0.0;
+    double globalPolarAngle = 0.0;
+    double polarLength = 0.0;
 
-    double xCoordinateDelta = 0;
-    double yCoordinateDelta = 0;
+    double xCoordinateDelta = 0.0;
+    double yCoordinateDelta = 0.0;
 
-    if(globalOrientationDeltaRadians == 0) {
+    const double epsilon = 1e-6;
+
+    if(globalOrientationDeltaRadians < epsilon) {
         localXOffset = horizontalTrackerDelta;
         localYOffset = verticalTrackerDelta;
     }
 
     else {
-        localXOffset = 2 * sin(globalOrientationDeltaRadians/2) * ((horizontalTrackerDelta / globalOrientationDeltaRadians) + horizontalToCenterDistance);
-        localYOffset = 2 * sin(globalOrientationDeltaRadians/2) * ((verticalTrackerDelta / globalOrientationDeltaRadians) + verticalToCenterDistance);
+        localXOffset = 2 * sin(globalOrientationDeltaRadians/2.0) * ((horizontalTrackerDelta / globalOrientationDeltaRadians) + horizontalToCenterDistance);
+        localYOffset = 2 * sin(globalOrientationDeltaRadians/2.0) * ((verticalTrackerDelta / globalOrientationDeltaRadians) + verticalToCenterDistance);
     }
 
     localPolarAngle = atan2(localYOffset, localXOffset);
