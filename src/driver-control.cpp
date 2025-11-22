@@ -1,12 +1,12 @@
 #include "driver-control.h"
 
-void runIfPressingMotor(motor& Motor, const controller::button& ButtonForward, const controller::button& ButtonReverse, int velocityPct) {
+void runIfPressingMotor(motor& Motor, const controller::button& ButtonForward, const controller::button& ButtonReverse, int forwardVelocityPct, int reverseVelocityPct) {
     if(ButtonForward.pressing()) {
-        Motor.spin(forward, velocityPct, pct);
+        Motor.spin(forward, forwardVelocityPct, pct);
     }
 
     else if(ButtonReverse.pressing()) {
-        Motor.spin(reverse, velocityPct, pct);
+        Motor.spin(reverse, reverseVelocityPct, pct);
     }
 
     else {
@@ -14,13 +14,13 @@ void runIfPressingMotor(motor& Motor, const controller::button& ButtonForward, c
     }
 }
 
-void runIfPressingMotorGroup(motor_group& MotorGroup, const controller::button& ButtonForward, const controller::button& ButtonReverse, int velocityPct) {
+void runIfPressingMotorGroup(motor_group& MotorGroup, const controller::button& ButtonForward, const controller::button& ButtonReverse, int forwardVelocityPct, int reverseVelocityPct) {
     if(ButtonForward.pressing()) {
-        MotorGroup.spin(forward, velocityPct, pct);
+        MotorGroup.spin(forward, forwardVelocityPct, pct);
     }
 
     else if(ButtonReverse.pressing()) {
-        MotorGroup.spin(reverse, velocityPct, pct);
+        MotorGroup.spin(reverse, reverseVelocityPct, pct);
     }
 
     else {
@@ -28,13 +28,13 @@ void runIfPressingMotorGroup(motor_group& MotorGroup, const controller::button& 
     }
 }
 
-void runIfPressedMotor(motor& Motor, const controller::button& ButtonForward, const controller::button& ButtonReverse, const controller::button& ButtonStop, int velocityPct) {
+void runIfPressedMotor(motor& Motor, const controller::button& ButtonForward, const controller::button& ButtonReverse, const controller::button& ButtonStop, int forwardVelocityPct, int reverseVelocityPct) {
     if(ButtonForward.pressing()) {
-        Motor.spin(forward, velocityPct, pct);
+        Motor.spin(forward, forwardVelocityPct, pct);
     }
 
     else if(ButtonReverse.pressing()) {
-        Motor.spin(reverse, velocityPct, pct);
+        Motor.spin(reverse, reverseVelocityPct, pct);
     }
 
     else if(ButtonStop.pressing()) {
@@ -42,13 +42,13 @@ void runIfPressedMotor(motor& Motor, const controller::button& ButtonForward, co
     }
 }
 
-void runIfPressedMotorGroup(motor_group& MotorGroup, const controller::button& ButtonForward, const controller::button& ButtonReverse, const controller::button& ButtonStop, int velocityPct) {
+void runIfPressedMotorGroup(motor_group& MotorGroup, const controller::button& ButtonForward, const controller::button& ButtonReverse, const controller::button& ButtonStop, int forwardVelocityPct, int reverseVelocityPct) {
     if(ButtonForward.pressing()) {
-        MotorGroup.spin(forward, velocityPct, pct);
+        MotorGroup.spin(forward, forwardVelocityPct, pct);
     }
 
     else if(ButtonReverse.pressing()) {
-        MotorGroup.spin(reverse, velocityPct, pct);
+        MotorGroup.spin(reverse, reverseVelocityPct, pct);
     }
 
     else if(ButtonStop.pressing()) {
@@ -115,29 +115,29 @@ void doublePark() {
 void moveIntake() {
     switch(CurrentDriver) {
         case Daniel:
-            runIfPressedMotor(Intake1, Controller.ButtonR2, Controller.ButtonR1, Controller.ButtonB, 99);
+            runIfPressedMotor(Intake1, Controller.ButtonR2, Controller.ButtonR1, Controller.ButtonB, 99, 50);
             //runIfPressedMotor(Intake2, Controller.ButtonY, Controller.ButtonR2, Controller.ButtonB, 25);
-            runIfPressedMotorGroup(Intake, Controller.ButtonL2, Controller.ButtonUp, Controller.ButtonB, 99);
+            runIfPressedMotorGroup(Intake, Controller.ButtonL2, Controller.ButtonUp, Controller.ButtonB, 99, 50);
             break;
 
         case Thomas:
-            runIfPressedMotor(Intake1, Controller.ButtonR1, Controller.ButtonR2, Controller.ButtonB, 99);
-            runIfPressedMotorGroup(Intake, Controller.ButtonL1, Controller.ButtonL2, Controller.ButtonB, 99);
+            runIfPressedMotor(Intake1, Controller.ButtonR1, Controller.ButtonR2, Controller.ButtonB, 99, 99);
+            runIfPressedMotorGroup(Intake, Controller.ButtonL1, Controller.ButtonL2, Controller.ButtonB, 99, 99);
             break;
 
         case Nikhil:
-            runIfPressedMotor(Intake1, Controller.ButtonR1, Controller.ButtonR2, Controller.ButtonB, 99);
-            runIfPressedMotorGroup(Intake, Controller.ButtonL1, Controller.ButtonL2, Controller.ButtonB, 99);
+            runIfPressedMotor(Intake1, Controller.ButtonR1, Controller.ButtonR2, Controller.ButtonB, 99, 99);
+            runIfPressedMotorGroup(Intake, Controller.ButtonL1, Controller.ButtonL2, Controller.ButtonB, 99, 99);
             break;
 
         case Shaurya:
-            runIfPressedMotor(Intake1, Controller.ButtonR1, Controller.ButtonR2, Controller.ButtonB, 99);
-            runIfPressedMotorGroup(Intake, Controller.ButtonL1, Controller.ButtonL2, Controller.ButtonB, 99);
+            runIfPressedMotor(Intake1, Controller.ButtonR1, Controller.ButtonR2, Controller.ButtonB, 99, 99);
+            runIfPressedMotorGroup(Intake, Controller.ButtonL1, Controller.ButtonL2, Controller.ButtonB, 99, 99);
             break;
 
         case Noob:
-            runIfPressedMotor(Intake1, Controller.ButtonR2, Controller.ButtonR1, Controller.ButtonB, 99);
-            runIfPressedMotorGroup(Intake, Controller.ButtonL2, Controller.ButtonUp, Controller.ButtonB, 99);
+            runIfPressedMotor(Intake1, Controller.ButtonR2, Controller.ButtonR1, Controller.ButtonB, 99, 99);
+            runIfPressedMotorGroup(Intake, Controller.ButtonL2, Controller.ButtonUp, Controller.ButtonB, 99, 99);
             break;
     }
 }
@@ -145,7 +145,7 @@ void moveIntake() {
 void moveDrivetrain() {
     switch(CurrentDriver) {
         case Daniel:
-            runArcadeDrive(LeftDrive, RightDrive, Controller, Controller.ButtonL1, 0.99, 0.95);
+            runArcadeDrive(LeftDrive, RightDrive, Controller, Controller.ButtonL1, 0.95, 0.90);
             break;
 
         case Thomas:
@@ -153,7 +153,7 @@ void moveDrivetrain() {
             break;
 
         case Nikhil:
-            runArcadeDrive(LeftDrive, RightDrive, Controller, Controller.ButtonUp, 0.4567911, 0.4367911);
+            runArcadeDrive(LeftDrive, RightDrive, Controller, Controller.ButtonUp, 0.55, 0.35);
             break;
 
         case Shaurya:

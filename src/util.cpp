@@ -1,5 +1,9 @@
 #include "util.h"
 
+double percentToVolts(double percent) {
+    return percent / 100 * 12;
+}
+
 double getSign(double input) {
     return (input > 0) - (input < 0);
 }
@@ -18,4 +22,26 @@ double getTurnError(double heading, double targetHeading) {
             return targetHeading - heading - 360;
         }
     }
+}
+
+double clamp(double input, double minimumValue, double maximumValue) {
+    if(input < minimumValue) {
+        return minimumValue;
+    }
+
+    else if(input > maximumValue) {
+        return maximumValue;
+    }
+
+    else {
+        return input;
+    }
+}
+
+double degreesToRadians(double degrees) {
+    return degrees * M_PI / 180;
+}
+
+double radiansToDegrees(double radians) {
+    return radians * 180 / M_PI;
 }

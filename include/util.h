@@ -5,5 +5,9 @@
 #include <iostream>
 using namespace vex;
 
+double percentToVolts(double percent);
 double getSign(double input);
 double getTurnError(double heading, double target);
+double clamp(double input, double minimumValue, double maximumValue);
+double degreesToRadians(double degrees);
+double radiansToDegrees(double radians);

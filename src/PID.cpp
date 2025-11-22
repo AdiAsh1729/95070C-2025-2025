@@ -25,10 +25,10 @@ bool PID::settled() {
 };
 
 double PID::output() {
-    this->derivative = (this->previousError - this->error) * 50;
+    this->derivative = this->error - this->previousError;
     
     if(std::abs(this->error) < this->startIntegral) {
-        this->integral += (this->error)/50;
+        this->integral += this->error;
     }
 
     if(getSign(this->error) != getSign(this->startError)) {
