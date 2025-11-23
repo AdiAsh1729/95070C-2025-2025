@@ -76,54 +76,58 @@ void RightQual() {
 void LeftQual() {
     std::cout << "LeftQual started!" << std::endl;
     SetPIDConstants();
-    
-    /*Intake.setVelocity(99, pct);
+
+    Intake.setVelocity(99, pct);
     Descore_MiddleGoal.set(true);
     Intake1.spin(forward);
     wait(50, msec);
-    chassis.driveDistanceSlow(30);
+    chassis.driveDistance(15);
     wait(50, msec);
-    Intake.stop();
-    chassis.turnToHeading(250);
+    chassis.driveDistanceSlow(10);
     wait(50, msec);
-    chassis.driveDistance(32.75);
+    chassis.turnToHeading(272.5);
+    wait(50, msec);
+    chassis.driveDistance(30.5);
     wait(50, msec);
     chassis.turnToHeading(195);
     wait(50, msec);
-    LeftDrive.spin(reverse, 90, pct);
-    RightDrive.spin(reverse, 90, pct);
-    wait(500, msec);
+    LeftDrive.spin(reverse, 50, pct);
+    RightDrive.spin(reverse, 50, pct);
+    wait(200, msec);
+    LeftDrive.spin(reverse, 10, pct);
+    RightDrive.spin(reverse, 10, pct);
+    Matchloader.set(false);
+    Intake.spin(forward);
+    
+    wait(250, msec);
     LeftDrive.stop();
     RightDrive.stop();
-    Intake.spin(forward);*/
+    wait(1000, msec);
+    Intake2.stop();
+    LeftDrive.spin(forward, 90, pct);
+    RightDrive.spin(forward, 90, pct);
+    wait(480, msec);
+    LeftDrive.spin(forward, 30, pct);
+    RightDrive.spin(forward, 30, pct);
+    wait(400, msec);
+    chassis.oscillate(3, 10, 300);
 
-    chassis.driveDistanceSlow(48);
+    wait(500, msec);
+    LeftDrive.spin(reverse, 50, pct);
+    RightDrive.spin(reverse, 50, pct);
+    wait(50, msec);
+    chassis.turnToHeading(195);
+    LeftDrive.spin(reverse, 50, pct);
+    RightDrive.spin(reverse, 50, pct);
+    wait(2, sec);
+    LeftDrive.stop();
+    RightDrive.stop();
+    oscillate(Intake, 1, 99, 500);
+    Intake.spin(forward);
 }
 
 void RightElim() {
-    std::cout << "RightElim started!" << std::endl;
-    SetPIDConstants();
     
-    /*Intake.setVelocity(99, pct);
-    Descore_MiddleGoal.set(true);
-    chassis.driveDistance(-40);
-    wait(50, msec);
-    Intake.spin(forward);
-    wait(250, msec);
-    Intake.stop();
-    chassis.driveDistance(15);
-    chassis.turnToHeading(300);
-    wait(50, msec);
-    chassis.driveDistanceSlow(24);
-    wait(50, msec);
-    chassis.turnToHeading(165);
-    wait(50, msec);
-    LeftDrive.spin(reverse, 90, pct);
-    RightDrive.spin(reverse, 90, pct);
-    wait(250, msec);
-    LeftDrive.stop();
-    RightDrive.stop();
-    Intake.spin(forward);*/
 }
 
 void LeftElim() {
@@ -131,6 +135,7 @@ void LeftElim() {
 }
 
 void SoloAWP() {
+    std::cout << "SoloAWP started" << std::endl;
     SetPIDConstants();
 
     Inertial.setHeading(165, deg);

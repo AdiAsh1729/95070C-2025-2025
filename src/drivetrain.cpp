@@ -146,7 +146,7 @@ void Drivetrain::driveDistancePct(double targetDistance) { //converting to volts
         wait(20, msec);
     } while(!drivePID.settled());
     
-    std::cout << "DrivePID is done!" << std::endl;
+    std::cout << "DrivePIDPct is done!" << std::endl;
     LeftDrive.stop(brake);
     RightDrive.stop(brake);
 };
