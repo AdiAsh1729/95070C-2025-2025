@@ -72,34 +72,37 @@ void preAuton(void) {
 }
 
 void autonomous() {
-        switch(CurrentAuton) {
-            case Null:
-                break;
+    timer autonTimer;
+    autonTimer.clear();
+    switch(CurrentAuton) {
+        case Null:
+            break;
 
-            case RunRightQual:
-                RightQual();
-                break;
+        case RunRightQual:
+            RightQual();
+            break;
 
-            case RunLeftQual:
-                LeftQual();
-                break;
+        case RunLeftQual:
+            LeftQual();
+            break;
 
-            case RunRightElim:
-                RightElim();
-                break;
+        case RunRightElim:
+            RightElim();
+            break;
 
-            case RunLeftElim:
-                LeftElim();
-                break;
+        case RunLeftElim:
+            LeftElim();
+            break;
 
-            case RunSoloAWP:
-                SoloAWP();
-                break;
+        case RunSoloAWP:
+            SoloAWP();
+            break;
 
-            case RunAutonSkills:
-                AutonSkills();
-                break;
-        }
+        case RunAutonSkills:
+            AutonSkills();
+            break;
+    }
+    std::cout << autonTimer.time(msec) << std::endl;
 }
 
 void driverControl() {

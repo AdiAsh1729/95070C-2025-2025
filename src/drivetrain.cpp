@@ -129,6 +129,28 @@ void Drivetrain::driveDistance(double targetDistance) { //converting to volts ma
     RightDrive.stop(brake);
 };
 
+void Drivetrain::driveDistancePct(double targetDistance) { //converting to volts makes it very smooth
+    PID drivePID(targetDistance, targetDistance, driveDistanceConstants.kp, driveDistanceConstants.ki, driveDistanceConstants.kd, targetDistance/5, 0, 0, targetDistance, 0.5, 0);
+
+    LeftDrive.resetPosition();
+    RightDrive.resetPosition();
+
+    do {
+        drivePID.error = drivePID.startError - (LeftDrive.position(turns) + RightDrive.position(turns))/2 * (this->wheelDiameter) * M_PI * (this->gearRatio);
+
+        drivePID.motorOutput = drivePID.output();
+        
+        LeftDrive.spin(forward, drivePID.motorOutput, pct);
+        RightDrive.spin(forward, drivePID.motorOutput, pct);
+
+        wait(20, msec);
+    } while(!drivePID.settled());
+    
+    std::cout << "DrivePID is done!" << std::endl;
+    LeftDrive.stop(brake);
+    RightDrive.stop(brake);
+};
+
 void Drivetrain::driveDistanceSlow(double targetDistance) { //converting to volts makes (almost) 2 seperate movements: before and after integral term is applied
     PID drivePID(targetDistance, targetDistance, driveDistanceSlowConstants.kp, driveDistanceSlowConstants.ki, driveDistanceSlowConstants.kd, targetDistance/5, 0, 0, targetDistance, 1, 0);
 
@@ -157,16 +179,10 @@ void Drivetrain::turnToHeading(double targetHeading) { //converting to volts mak
     do {
         turnPID.error = getTurnError(Inertial.heading(), targetHeading);
 
-        //turnPID.motorOutput = clamp(turnPID.output(), 5.8, 99.9);
         turnPID.motorOutput = turnPID.output();
 
         LeftDrive.spin(forward, turnPID.motorOutput, pct);
         RightDrive.spin(reverse, turnPID.motorOutput, pct);
-
-        //LeftDrive.spin(forward, percentToVolts(turnPID.motorOutput), volt);
-        //RightDrive.spin(reverse, percentToVolts(turnPID.motorOutput), volt);
-        
-        std::cout << turnPID.error << ", " << turnPID.motorOutput << std::endl;
 
         wait(20, msec);
     } while(!turnPID.settled());
@@ -179,11 +195,11 @@ void Drivetrain::turnToHeading(double targetHeading) { //converting to volts mak
 
 void Drivetrain::oscillate(int numberOfOscillations, double speedOfOscillation, double timeOfOscillation) {
     for(int i = 0; i < numberOfOscillations; i++) {
-        LeftDrive.spin(forward, percentToVolts(speedOfOscillation), pct);
-        RightDrive.spin(forward, percentToVolts(speedOfOscillation), pct);
+        LeftDrive.spin(forward, speedOfOscillation, pct);
+        RightDrive.spin(forward, speedOfOscillation, pct);
         wait(timeOfOscillation, msec);
-        LeftDrive.spin(reverse, percentToVolts(speedOfOscillation), pct);
-        RightDrive.spin(reverse, percentToVolts(speedOfOscillation), pct);
+        LeftDrive.spin(reverse, speedOfOscillation, pct);
+        RightDrive.spin(reverse, speedOfOscillation, pct);
         if(i < numberOfOscillations - 1) {
             wait(timeOfOscillation, msec);
         }

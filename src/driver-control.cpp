@@ -73,6 +73,8 @@ void runArcadeDrive(motor_group& LeftDrive, motor_group& RightDrive, controller&
     LeftDrive.setVelocity((DriveSpeed + TurnSpeed), pct);
     RightDrive.setVelocity((DriveSpeed - TurnSpeed), pct);
 
+    std::cout << DriveSpeed << std::endl;
+
     LeftDrive.spin(forward);
     RightDrive.spin(forward);
 }

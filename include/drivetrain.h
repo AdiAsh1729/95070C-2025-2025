@@ -59,6 +59,7 @@ class Drivetrain {
         outputConstants turnToHeadingConstants;
 
         void driveDistance(double targetDistance);
+        void driveDistancePct(double targetDistance);
         void driveDistanceSlow(double targetDistance);
         void turnToHeading(double targetHeading);
         void oscillate(int numberOfOscillations, double speedOfOscillation, double timeOfOscillation);
