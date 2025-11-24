@@ -3,6 +3,8 @@
 void SetPIDConstants() {
     chassis.driveDistanceConstants.kp = 3.6; chassis.driveDistanceConstants.ki = 0; chassis.driveDistanceConstants.kd = 0.3;
 
+    chassis.driveDistanceConstantsPct.kp = 3.6; chassis.driveDistanceConstantsPct.ki = 0; chassis.driveDistanceConstantsPct.kd = 0.8;
+
     //chassis.driveDistanceSlowConstants.kp = 0.75; chassis.driveDistanceSlowConstants.ki = 0.05; chassis.driveDistanceSlowConstants.kd = 0.5;
     chassis.driveDistanceSlowConstants.kp = 1.25; chassis.driveDistanceSlowConstants.ki = 0.05; chassis.driveDistanceSlowConstants.kd = 0.5;
 
@@ -28,13 +30,13 @@ void RightQual() {
     Descore_MiddleGoal.set(true);
     Intake1.spin(forward);
     wait(50, msec);
-    chassis.driveDistance(15);
+    chassis.driveDistancePct(15);
     wait(50, msec);
     chassis.driveDistanceSlow(10);
     wait(50, msec);
     chassis.turnToHeading(87.5);
     wait(50, msec);
-    chassis.driveDistance(30.5);
+    chassis.driveDistance(30);
     wait(50, msec);
     chassis.turnToHeading(165);
     wait(50, msec);
@@ -81,19 +83,19 @@ void LeftQual() {
     Descore_MiddleGoal.set(true);
     Intake1.spin(forward);
     wait(50, msec);
-    chassis.driveDistance(15);
+    chassis.driveDistancePct(15);
     wait(50, msec);
     chassis.driveDistanceSlow(10);
     wait(50, msec);
-    chassis.turnToHeading(272.5);
+    chassis.turnToHeading(265);
     wait(50, msec);
-    chassis.driveDistance(30.5);
+    chassis.driveDistance(30.75);
     wait(50, msec);
-    chassis.turnToHeading(195);
+    chassis.turnToHeading(200);
     wait(50, msec);
     LeftDrive.spin(reverse, 50, pct);
     RightDrive.spin(reverse, 50, pct);
-    wait(200, msec);
+    wait(250, msec);
     LeftDrive.spin(reverse, 10, pct);
     RightDrive.spin(reverse, 10, pct);
     Matchloader.set(false);
@@ -106,7 +108,7 @@ void LeftQual() {
     Intake2.stop();
     LeftDrive.spin(forward, 90, pct);
     RightDrive.spin(forward, 90, pct);
-    wait(480, msec);
+    wait(450, msec);
     LeftDrive.spin(forward, 30, pct);
     RightDrive.spin(forward, 30, pct);
     wait(400, msec);
@@ -116,7 +118,7 @@ void LeftQual() {
     LeftDrive.spin(reverse, 50, pct);
     RightDrive.spin(reverse, 50, pct);
     wait(50, msec);
-    chassis.turnToHeading(195);
+    chassis.turnToHeading(200);
     LeftDrive.spin(reverse, 50, pct);
     RightDrive.spin(reverse, 50, pct);
     wait(2, sec);
@@ -127,7 +129,7 @@ void LeftQual() {
 }
 
 void RightElim() {
-    
+    chassis.driveDistance(1);
 }
 
 void LeftElim() {
@@ -157,13 +159,13 @@ void AutonSkills() {
     Descore_MiddleGoal.set(true);
     Intake1.spin(forward);
     wait(50, msec);
-    chassis.driveDistance(15);
+    chassis.driveDistancePct(15);
     wait(50, msec);
     chassis.driveDistanceSlow(10);
     wait(50, msec);
     chassis.turnToHeading(87.5);
     wait(50, msec);
-    chassis.driveDistance(29);
+    chassis.driveDistance(30);
     wait(50, msec);
     chassis.turnToHeading(165);
     wait(50, msec);
@@ -175,20 +177,20 @@ void AutonSkills() {
     Matchloader.set(false);
     Intake.spin(forward);
     
-    wait(500, msec);
+    wait(250, msec);
     LeftDrive.stop();
     RightDrive.stop();
     wait(1000, msec);
     Intake2.stop();
     LeftDrive.spin(forward, 90, pct);
     RightDrive.spin(forward, 90, pct);
-    wait(490, msec);
+    wait(480, msec);
     LeftDrive.spin(forward, 30, pct);
     RightDrive.spin(forward, 30, pct);
-    wait(500, msec);
-    chassis.oscillate(3, 10, 400);
+    wait(400, msec);
+    chassis.oscillate(3, 10, 300);
 
-    wait(1000, msec);
+    wait(500, msec);
     LeftDrive.spin(reverse, 50, pct);
     RightDrive.spin(reverse, 50, pct);
     wait(50, msec);
@@ -198,14 +200,8 @@ void AutonSkills() {
     wait(2, sec);
     LeftDrive.stop();
     RightDrive.stop();
+    oscillate(Intake, 1, 99, 500);
     Intake.spin(forward);
-    wait(2, sec);
-    oscillate(Intake, 2, 99, 500);
-    Intake.spin(forward);
-    wait(500, msec);
-    Inertial.setHeading(165, deg);
-    Intake.stop();
-    Matchloader.set(true);
     //////////////////////////////////////////////////
     
     wait(50, msec);
@@ -245,8 +241,8 @@ void AutonSkills() {
     wait(490, msec);
     LeftDrive.spin(forward, 30, pct);
     RightDrive.spin(forward, 30, pct);
-    wait(500, msec);
-    chassis.oscillate(3, 10, 400);
+    wait(600, msec);
+    chassis.oscillate(4, 10, 400);
 
     wait(1000, msec);
     LeftDrive.spin(reverse, 50, pct);
