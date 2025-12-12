@@ -55,7 +55,6 @@ class Drivetrain {
         };
 
         outputConstants driveDistanceConstants;
-        outputConstants driveDistanceConstantsPct;
         outputConstants driveDistanceSlowConstants;
         outputConstants turnToHeadingConstants;
 

@@ -107,29 +107,7 @@ int Drivetrain::trackPosition() {
     return 0;
 }
 
-void Drivetrain::driveDistance(double targetDistance) { //converting to volts makes it very smooth
-    PID drivePID(targetDistance, targetDistance, driveDistanceConstants.kp, driveDistanceConstants.ki, driveDistanceConstants.kd, targetDistance/5, 0, 0, targetDistance, 0.5, 0);
-
-    LeftDrive.resetPosition();
-    RightDrive.resetPosition();
-
-    do {
-        drivePID.error = drivePID.startError - (LeftDrive.position(turns) + RightDrive.position(turns))/2 * (this->wheelDiameter) * M_PI * (this->gearRatio);
-
-        drivePID.motorOutput = drivePID.output();
-        
-        LeftDrive.spin(forward, percentToVolts(drivePID.motorOutput), volt);
-        RightDrive.spin(forward, percentToVolts(drivePID.motorOutput), volt);
-
-        wait(20, msec);
-    } while(!drivePID.settled());
-    
-    std::cout << "DrivePID is done!" << std::endl;
-    LeftDrive.stop(brake);
-    RightDrive.stop(brake);
-};
-
-void Drivetrain::driveDistancePct(double targetDistance) { //converting to volts makes it very smooth
+void Drivetrain::driveDistance(double targetDistance) {
     PID drivePID(targetDistance, targetDistance, driveDistanceConstants.kp, driveDistanceConstants.ki, driveDistanceConstants.kd, targetDistance/5, 0, 0, targetDistance, 0.5, 0);
 
     LeftDrive.resetPosition();
@@ -146,7 +124,7 @@ void Drivetrain::driveDistancePct(double targetDistance) { //converting to volts
         wait(20, msec);
     } while(!drivePID.settled());
     
-    std::cout << "DrivePIDPct is done!" << std::endl;
+    std::cout << "DrivePID is done!" << std::endl;
     LeftDrive.stop(brake);
     RightDrive.stop(brake);
 };

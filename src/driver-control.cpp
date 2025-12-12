@@ -73,8 +73,6 @@ void runArcadeDrive(motor_group& LeftDrive, motor_group& RightDrive, controller&
     LeftDrive.setVelocity((DriveSpeed + TurnSpeed), pct);
     RightDrive.setVelocity((DriveSpeed - TurnSpeed), pct);
 
-    std::cout << percentToVolts(DriveSpeed) << std::endl;
-
     LeftDrive.spin(forward);
     RightDrive.spin(forward);
 }
@@ -155,7 +153,7 @@ void moveDrivetrain() {
             break;
 
         case Nikhil:
-            runArcadeDrive(LeftDrive, RightDrive, Controller, Controller.ButtonUp, 0.55, 0.35);
+            runArcadeDrive(LeftDrive, RightDrive, Controller, Controller.ButtonUp, 0.67, 0.35);
             break;
 
         case Shaurya:
