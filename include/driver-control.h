@@ -12,11 +12,11 @@ inline int DMPressed = 0;
 inline int MatchloadPressed = 0;
 inline int ParkPressed = 0;
 
-void runIfPressingMotor(motor&, controller::button&, controller::button&, int);
-void runIfPressingMotorGroup(motor_group&, controller::button&, controller::button&, int);
-void runIfPressedMotor(motor&, controller::button&, controller::button&, controller::button&, int);
-void runIfPressedMotorGroup(motor_group&, controller::button&, controller::button&, controller::button&, int);
-void runArcadeDrive(motor_group&, motor_group&, inertial&, controller&);
+void runIfPressingMotor(motor&, const controller::button&, const controller::button&, int, int);
+void runIfPressingMotorGroup(motor_group&, const controller::button&, const controller::button&, int, int);
+void runIfPressedMotor(motor&, const controller::button&, const controller::button&, const controller::button&, int, int);
+void runIfPressedMotorGroup(motor_group&, const controller::button&, const controller::button&, const controller::button&, int, int);
+void runArcadeDrive(motor_group&, motor_group&, controller&, const controller::button&, double, double);
 void rotationTest(double RPM);
 void rotationTest2(double velocity);
 

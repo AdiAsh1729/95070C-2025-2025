@@ -67,8 +67,6 @@ void preAuton(void) {
         wait(20, msec);
         return;
     }
-    
-    vexcodeInit();
 }
 
 void autonomous() {
@@ -128,9 +126,11 @@ int main() {
     //rotationTest2(10);
     //rotationTest(200);
     Matchloader.set(true);
-    preAuton(); // Calibrate Inertial sensor, select auton, select driver
+
     Competition.drivercontrol(driverControl); // If switch is in Driver Control run DriverControl
     Competition.autonomous(autonomous); // If switch is autonomous run autonomous
+
+    preAuton(); // Calibrate Inertial sensor, select auton, select driver
 
     while(true) {
         wait(20, msec);

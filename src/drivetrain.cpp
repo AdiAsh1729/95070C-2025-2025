@@ -79,7 +79,7 @@ double Drivetrain::getHorizontalTrackerPositionInches() {
 
 double Drivetrain::getVerticalTrackerPositionInches() {
     if(this->odometryType == ZeroTrackerOdometry || this->odometryType == OneTrackerOdometry) {
-        return (LeftDrive.position(turns) + RightDrive.position(turns))/2 * M_PI * this->wheelDiameter;
+        return (LeftDrive.position(turns) + RightDrive.position(turns))/2 * M_PI * this->wheelDiameter * this->gearRatio;
     }
 
     else if(this->odometryType == TwoTrackerOdometry) {
@@ -125,18 +125,17 @@ void Drivetrain::driveDistance(double targetDistance) {
 
         drivePID.motorOutput = drivePID.output();
         
-        if((LeftDrive.velocity(pct) == 0 && !(RightDrive.velocity(pct)) == 0) || (!(LeftDrive.velocity(pct) == 0) && RightDrive.velocity(pct) == 0)) {
+        if((LeftDrive.velocity(pct) == 0 && RightDrive.velocity(pct) != 0) || (LeftDrive.velocity(pct) != 0 && RightDrive.velocity(pct) == 0)) {
             drivePID.motorOutput = 0;
         }
-            
+
         LeftDrive.spin(forward, drivePID.motorOutput, pct);
         RightDrive.spin(forward, drivePID.motorOutput, pct);
 
         std::cout << LeftDrive.position(turns) * (this->wheelDiameter) * M_PI * (this->gearRatio) << ", " << RightDrive.position(turns) * (this->wheelDiameter) * M_PI * (this->gearRatio) << ", " << Inertial.heading() << std::endl;
 
+        drivePID.timeSpent += 20;
         wait(20, msec);
-
-       //drivePID.timeSpent = DrivePIDTimer.time(msec);
     } while(!drivePID.settled());
     
     std::cout << "DrivePID is done!" << std::endl;
@@ -159,9 +158,10 @@ void Drivetrain::driveDistance(double targetDistance, double minimumSpeed) {
         LeftDrive.spin(forward, drivePID.motorOutput, pct);
         RightDrive.spin(forward, drivePID.motorOutput, pct);
 
+        drivePID.timeSpent += 20;
         wait(20, msec);
     } while(!drivePID.settled());
-    
+
     std::cout << "DrivePID is done!" << std::endl;
     LeftDrive.stop(brake);
     RightDrive.stop(brake);
@@ -180,16 +180,17 @@ void Drivetrain::driveDistanceSlow(double targetDistance) {
         
         drivePID.motorOutput = drivePID.output();
 
-        if((LeftDrive.velocity(pct) == 0 && !(RightDrive.velocity(pct)) == 0) || (!(LeftDrive.velocity(pct) == 0) && RightDrive.velocity(pct) == 0)) {
+        if((LeftDrive.velocity(pct) == 0 && RightDrive.velocity(pct) != 0) || (LeftDrive.velocity(pct) != 0 && RightDrive.velocity(pct) == 0)) {
             drivePID.motorOutput = 0;
         }
 
         LeftDrive.spin(forward, drivePID.motorOutput, pct);
         RightDrive.spin(forward, drivePID.motorOutput, pct);
 
+        drivePID.timeSpent += 20;
         wait(20, msec);
     } while(!drivePID.settled());
-    
+
     std::cout << "DriveSlowPID is done!" << std::endl;
     LeftDrive.stop(brake);
     RightDrive.stop(brake);
@@ -205,14 +206,15 @@ void Drivetrain::driveDistanceSlow(double targetDistance, double minimumSpeed) {
     do {
         drivePID.error = drivePID.startError - (LeftDrive.position(turns) + RightDrive.position(turns))/2 * (this->wheelDiameter) * M_PI * (this->gearRatio);
         
-        clamp(drivePID.output(), getSign(drivePID.startError) * minimumSpeed, getSign(drivePID.startError) * 99.9);
+        drivePID.motorOutput = clamp(drivePID.output(), getSign(drivePID.startError) * minimumSpeed, getSign(drivePID.startError) * 99.9);
 
         LeftDrive.spin(forward, drivePID.motorOutput, pct);
         RightDrive.spin(forward, drivePID.motorOutput, pct);
 
+        drivePID.timeSpent += 20;
         wait(20, msec);
     } while(!drivePID.settled());
-    
+
     std::cout << "DriveSlowPID is done!" << std::endl;
     LeftDrive.stop(brake);
     RightDrive.stop(brake);
@@ -231,9 +233,9 @@ void Drivetrain::turnToHeading(double targetHeading) {
         LeftDrive.spin(forward, turnPID.motorOutput, pct);
         RightDrive.spin(reverse, turnPID.motorOutput, pct);
 
+        turnPID.timeSpent += 20;
         wait(20, msec);
     } while(!turnPID.settled());
-
 
     std::cout << "TurnPID is done!" << std::endl;
     LeftDrive.stop(brake);
@@ -241,18 +243,19 @@ void Drivetrain::turnToHeading(double targetHeading) {
 };
 
 void Drivetrain::arcToHeading(double targetHeading, double radius, double minimumSpeed) {
-    PID arcLeftPID(0, 0, arcConstants.kp, arcConstants.ki, arcConstants.kd, 0, 0, 0, 0, 0, 0, 0, 0);
-    PID arcRightPID(0, 0, arcConstants.kp, arcConstants.ki, arcConstants.kd, 0, 0, 0, 0, 0, 0, 0, 0);
+    double turnError = getTurnError(Inertial.heading(), targetHeading);
+    double leftArcDist, rightArcDist;
 
-    if(getTurnError(Inertial.heading(), targetHeading) > 0) {
-        PID arcLeftPID(getGreaterArcDistance(getTurnError(Inertial.heading(), targetHeading), radius, this->distanceToSideOfDrivetrain), getGreaterArcDistance(getTurnError(Inertial.heading(), targetHeading), radius, this->distanceToSideOfDrivetrain), arcConstants.kp, arcConstants.ki, arcConstants.kd, getGreaterArcDistance(getTurnError(Inertial.heading(), targetHeading), radius, this->distanceToSideOfDrivetrain)/5, 0, 0, getGreaterArcDistance(getTurnError(Inertial.heading(), targetHeading), radius, this->distanceToSideOfDrivetrain), 3, 0, 1.5, 0);
-        PID arcRightPID(getLesserArcDistance(getTurnError(Inertial.heading(), targetHeading), radius, this->distanceToSideOfDrivetrain), getLesserArcDistance(getTurnError(Inertial.heading(), targetHeading), radius, this->distanceToSideOfDrivetrain), arcConstants.kp, arcConstants.ki, arcConstants.kd, getLesserArcDistance(getTurnError(Inertial.heading(), targetHeading), radius, this->distanceToSideOfDrivetrain)/5, 0, 0, getLesserArcDistance(getTurnError(Inertial.heading(), targetHeading), radius, this->distanceToSideOfDrivetrain), 3, 0, 1.5, 0);
+    if(turnError > 0) {
+        leftArcDist = getGreaterArcDistance(turnError, radius, this->distanceToSideOfDrivetrain);
+        rightArcDist = getLesserArcDistance(turnError, radius, this->distanceToSideOfDrivetrain);
+    } else {
+        leftArcDist = getLesserArcDistance(turnError, radius, this->distanceToSideOfDrivetrain);
+        rightArcDist = getGreaterArcDistance(turnError, radius, this->distanceToSideOfDrivetrain);
     }
 
-    else {
-        PID arcLeftPID(getLesserArcDistance(getTurnError(Inertial.heading(), targetHeading), radius, this->distanceToSideOfDrivetrain), getLesserArcDistance(getTurnError(Inertial.heading(), targetHeading), radius, this->distanceToSideOfDrivetrain), arcConstants.kp, arcConstants.ki, arcConstants.kd, getLesserArcDistance(getTurnError(Inertial.heading(), targetHeading), radius, this->distanceToSideOfDrivetrain)/5, 0, 0, getLesserArcDistance(getTurnError(Inertial.heading(), targetHeading), radius, this->distanceToSideOfDrivetrain), 3, 0, 1.5, 0);
-        PID arcRightPID(getGreaterArcDistance(getTurnError(Inertial.heading(), targetHeading), radius, this->distanceToSideOfDrivetrain), getGreaterArcDistance(getTurnError(Inertial.heading(), targetHeading), radius, this->distanceToSideOfDrivetrain), arcConstants.kp, arcConstants.ki, arcConstants.kd, getGreaterArcDistance(getTurnError(Inertial.heading(), targetHeading), radius, this->distanceToSideOfDrivetrain)/5, 0, 0, getGreaterArcDistance(getTurnError(Inertial.heading(), targetHeading), radius, this->distanceToSideOfDrivetrain), 3, 0, 1.5, 0);
-    }
+    PID arcLeftPID(leftArcDist, leftArcDist, arcConstants.kp, arcConstants.ki, arcConstants.kd, leftArcDist/5, 0, 0, leftArcDist, 3, 0, 1.5, 0);
+    PID arcRightPID(rightArcDist, rightArcDist, arcConstants.kp, arcConstants.ki, arcConstants.kd, rightArcDist/5, 0, 0, rightArcDist, 3, 0, 1.5, 0);
 
     do {
         arcLeftPID.error = getTurnError(Inertial.heading(), targetHeading);
@@ -260,14 +263,14 @@ void Drivetrain::arcToHeading(double targetHeading, double radius, double minimu
 
         arcLeftPID.motorOutput = arcLeftPID.output();
         arcRightPID.motorOutput = arcRightPID.output();
-        
 
         LeftDrive.spin(forward, arcLeftPID.motorOutput, pct);
         RightDrive.spin(reverse, arcRightPID.motorOutput, pct);
 
+        arcLeftPID.timeSpent += 20;
+        arcRightPID.timeSpent += 20;
         wait(20, msec);
     } while(!arcLeftPID.settled() || !arcRightPID.settled());
-
 
     std::cout << "ArcPIDs are done!" << std::endl;
     LeftDrive.stop(brake);

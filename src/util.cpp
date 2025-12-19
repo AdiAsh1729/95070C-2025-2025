@@ -21,12 +21,16 @@ double getTurnError(double heading, double targetHeading) {
 }
 
 double clamp(double input, double minimumValue, double maximumValue) {
-    if(input < minimumValue) {
-        return minimumValue;
+    // Handle case where min > max (e.g., when dealing with negative values)
+    double actualMin = std::min(minimumValue, maximumValue);
+    double actualMax = std::max(minimumValue, maximumValue);
+
+    if(input < actualMin) {
+        return actualMin;
     }
 
-    else if(input > maximumValue) {
-        return maximumValue;
+    else if(input > actualMax) {
+        return actualMax;
     }
 
     else {
@@ -43,9 +47,11 @@ double radiansToDegrees(double radians) {
 }
 
 double getGreaterArcDistance(double headingDelta, double radius, double distanceToSideOfDrivetrain) {
-    return 2 * M_PI * (radius + distanceToSideOfDrivetrain);
+    // Arc length = angle (in radians) * radius
+    return degreesToRadians(std::abs(headingDelta)) * (radius + distanceToSideOfDrivetrain);
 }
 
 double getLesserArcDistance(double headingDelta, double radius, double distanceToSideOfDrivetrain) {
-    return 2 * M_PI * (radius - distanceToSideOfDrivetrain);
+    // Arc length = angle (in radians) * radius
+    return degreesToRadians(std::abs(headingDelta)) * (radius - distanceToSideOfDrivetrain);
 }

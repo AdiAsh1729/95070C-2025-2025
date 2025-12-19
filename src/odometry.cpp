@@ -33,7 +33,7 @@ void Odometry::updatePosition(double horizontalTrackerPosition, double verticalT
 
     const double epsilon = 1e-6;
 
-    if(globalOrientationDeltaRadians < epsilon) {
+    if(std::abs(globalOrientationDeltaRadians) < epsilon) {
         localXOffset = horizontalTrackerDelta;
         localYOffset = verticalTrackerDelta;
     }
