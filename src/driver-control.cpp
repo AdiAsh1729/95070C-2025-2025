@@ -57,6 +57,9 @@ void runIfPressedMotorGroup(motor_group& MotorGroup, const controller::button& B
 }
 
 void runArcadeDrive(motor_group& LeftDrive, motor_group& RightDrive, controller& Controller, const controller::button& SlowButton, double scaleDriveSpeed, double scaleTurnSpeed) {
+    //static double totalCount = 0;
+    //static double totalRatio = 0;
+
     double buttonScaleSpeed = 1;
     if(SlowButton.pressing()) {
         buttonScaleSpeed = 0.1;
@@ -73,8 +76,35 @@ void runArcadeDrive(motor_group& LeftDrive, motor_group& RightDrive, controller&
     LeftDrive.setVelocity((DriveSpeed + TurnSpeed), pct);
     RightDrive.setVelocity((DriveSpeed - TurnSpeed), pct);
 
+    /*if(RightDrive.velocity(pct) > 0) {
+        totalCount++;
+        totalRatio += LeftDrive.velocity(pct)/RightDrive.velocity(pct);
+    }*/
+
+    //std::cout << /*totalRatio/totalCount*/(LeftDrive.velocity(pct) + RightDrive.velocity(pct))/2 << std::endl;
+
     LeftDrive.spin(forward);
     RightDrive.spin(forward);
+}
+
+void rotationTest(double RPM) {
+    LeftDrive.spin(forward, RPM, rpm);
+    RightDrive.spin(forward, RPM, rpm);
+    wait(80000/RPM, msec);
+    LeftDrive.stop(hold);
+    RightDrive.stop(hold);
+    std::cout << LeftDrive.position(turns) * 3/4 << ", " << RightDrive.position(turns) * 3/4 << std::endl;
+}
+
+void rotationTest2(double velocity) {
+    LeftDrive.resetPosition();
+    RightDrive.resetPosition();
+    LeftDrive.spin(forward, velocity, pct);
+    RightDrive.spin(forward, velocity, pct);
+    wait(40000/(3*velocity), msec);
+    LeftDrive.stop(brake);
+    RightDrive.stop(brake);
+    std::cout << LeftDrive.position(turns) * 3/4 << ", " << RightDrive.position(turns) * 3/4 << std::endl;
 }
 
 void descore_middleGoal() {
@@ -149,11 +179,11 @@ void moveDrivetrain() {
             break;
 
         case Thomas:
-            runArcadeDrive(LeftDrive, RightDrive, Controller, Controller.ButtonUp, 0.38, 0.30);
+            runArcadeDrive(LeftDrive, RightDrive, Controller, Controller.ButtonUp, -0.40, 0.30);
             break;
 
         case Nikhil:
-            runArcadeDrive(LeftDrive, RightDrive, Controller, Controller.ButtonUp, 0.67, 0.35);
+            runArcadeDrive(LeftDrive, RightDrive, Controller, Controller.ButtonUp, 0.70, 0.30);
             break;
 
         case Shaurya:

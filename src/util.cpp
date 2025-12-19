@@ -1,9 +1,5 @@
 #include "util.h"
 
-double percentToVolts(double percent) {
-    return percent / 100 * 12;
-}
-
 double getSign(double input) {
     return (input > 0) - (input < 0);
 }
@@ -44,4 +40,12 @@ double degreesToRadians(double degrees) {
 
 double radiansToDegrees(double radians) {
     return radians * 180 / M_PI;
+}
+
+double getGreaterArcDistance(double headingDelta, double radius, double distanceToSideOfDrivetrain) {
+    return 2 * M_PI * (radius + distanceToSideOfDrivetrain);
+}
+
+double getLesserArcDistance(double headingDelta, double radius, double distanceToSideOfDrivetrain) {
+    return 2 * M_PI * (radius - distanceToSideOfDrivetrain);
 }

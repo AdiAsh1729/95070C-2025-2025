@@ -24,6 +24,7 @@ class Drivetrain {
 
         double gearRatio;
         double wheelDiameter;
+        double distanceToSideOfDrivetrain;
         double horizontalWheelDiameter;
         double verticalWheelDiameter;
         double horizontalToCenterDistance;
@@ -35,9 +36,9 @@ class Drivetrain {
         task positionTrackingTask;
 
     public:
-        Drivetrain(brain& Brain, motor_group& LeftDrive, motor_group& RightDrive, inertial& Inertial, double gearRatio, double wheelDiameter);
-        Drivetrain(brain& Brain, motor_group& LeftDrive, motor_group& RightDrive, rotation& HorizontalTracker, inertial& Inertial, double gearRatio,  double wheelDiameter, double horizontalWheelDiameter, double horizontalToCenterDistance);
-        Drivetrain(brain& Brain, motor_group& LeftDrive, motor_group& RightDrive, rotation& HorizontalTracker, rotation& VerticalTracker, inertial& Inertial, double gearRatio,  double wheelDiameter, double horizontalWheelDiameter, double verticalWheelDiameter, double horizontalToCenterDistance, double verticalToCenterDistance);
+        Drivetrain(brain& Brain, motor_group& LeftDrive, motor_group& RightDrive, inertial& Inertial, double gearRatio, double wheelDiameter, double distanceToSideOfDrivetrain);
+        Drivetrain(brain& Brain, motor_group& LeftDrive, motor_group& RightDrive, rotation& HorizontalTracker, inertial& Inertial, double gearRatio,  double wheelDiameter, double distanceToSideOfDrivetrain, double horizontalWheelDiameter, double horizontalToCenterDistance);
+        Drivetrain(brain& Brain, motor_group& LeftDrive, motor_group& RightDrive, rotation& HorizontalTracker, rotation& VerticalTracker, inertial& Inertial, double gearRatio,  double wheelDiameter, double distanceToSideOfDrivetrain, double horizontalWheelDiameter, double verticalWheelDiameter, double horizontalToCenterDistance, double verticalToCenterDistance);
 
         Odometry odometry;
 
@@ -57,11 +58,18 @@ class Drivetrain {
         outputConstants driveDistanceConstants;
         outputConstants driveDistanceSlowConstants;
         outputConstants turnToHeadingConstants;
+        outputConstants arcConstants;
 
         void driveDistance(double targetDistance);
-        void driveDistancePct(double targetDistance);
+        void driveDistance(double targetDistance, double minimumSpeed);
+
         void driveDistanceSlow(double targetDistance);
+        void driveDistanceSlow(double targetDistance, double minimumSpeed);
+
         void turnToHeading(double targetHeading);
+
+        void arcToHeading(double targetHeading, double radius, double minimumSpeed);
+
         void oscillate(int numberOfOscillations, double speedOfOscillation, double timeOfOscillation);
 };
 

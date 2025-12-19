@@ -5,7 +5,7 @@ controller Controller = controller(primary); //our controller
 
 motor FL = motor(PORT13, ratio6_1, true); //our front left motor
 motor ML = motor(PORT11, ratio6_1, true); //our middle left motor
-motor BL = motor(PORT2, ratio6_1, true); //our back left motor
+motor BL = motor(PORT12, ratio6_1, true); //our back left motor
 motor_group LeftDrive = motor_group(FL, ML, BL); //a motor group consisting of the motors on the left side of our drivetrain
 motor FR = motor(PORT17, ratio6_1, false); //our front right motor
 motor MR = motor(PORT20, ratio6_1, false); //our middle right motor
