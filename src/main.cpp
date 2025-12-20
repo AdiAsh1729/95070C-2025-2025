@@ -67,8 +67,6 @@ void preAuton(void) {
         wait(20, msec);
         return;
     }
-    
-    vexcodeInit();
 }
 
 void autonomous() {
