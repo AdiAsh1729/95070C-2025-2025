@@ -34,5 +34,5 @@ double PID::output() {
 
     this->previousError = this->error;
 
-    return this->error * this->kp + this->integral * this->ki + this->derivative * this->kd; 
+    return this->error * this->kp + this->integral * this->ki - this->derivative * this->kd; 
 };

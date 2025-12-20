@@ -57,8 +57,8 @@ void runIfPressedMotorGroup(motor_group& MotorGroup, const controller::button& B
 }
 
 void runArcadeDrive(motor_group& LeftDrive, motor_group& RightDrive, controller& Controller, const controller::button& SlowButton, double scaleDriveSpeed, double scaleTurnSpeed) {
-    //static double totalCount = 0;
-    //static double totalRatio = 0;
+    static double totalCount = 0;
+    static double totalRatio = 0;
 
     double buttonScaleSpeed = 1;
     if(SlowButton.pressing()) {
@@ -76,12 +76,12 @@ void runArcadeDrive(motor_group& LeftDrive, motor_group& RightDrive, controller&
     LeftDrive.setVelocity((DriveSpeed + TurnSpeed), pct);
     RightDrive.setVelocity((DriveSpeed - TurnSpeed), pct);
 
-    /*if(RightDrive.velocity(pct) > 0) {
+    if(RightDrive.velocity(pct) > 0) {
         totalCount++;
         totalRatio += LeftDrive.velocity(pct)/RightDrive.velocity(pct);
-    }*/
+    }
 
-    //std::cout << /*totalRatio/totalCount*/(LeftDrive.velocity(pct) + RightDrive.velocity(pct))/2 << std::endl;
+    std::cout << totalRatio/totalCount/*(LeftDrive.velocity(pct) + RightDrive.velocity(pct))/2*/ << std::endl;
 
     LeftDrive.spin(forward);
     RightDrive.spin(forward);

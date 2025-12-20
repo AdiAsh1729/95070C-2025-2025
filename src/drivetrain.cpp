@@ -112,30 +112,34 @@ int Drivetrain::trackPosition() {
 
 //drive a straight line distance
 void Drivetrain::driveDistance(double targetDistance) {
-    PID driveLeftPID(targetDistance, targetDistance, driveDistanceConstants.kp, driveDistanceConstants.ki, driveDistanceConstants.kd, 10, 0, 0, targetDistance, 0.5, 0, Decay);
-    PID driveRightPID(targetDistance, targetDistance, driveDistanceConstants.kp, driveDistanceConstants.ki, driveDistanceConstants.kd, 10, 0, 0, targetDistance, 0.5, 0, Decay);
+    PID drivePID(targetDistance, targetDistance, driveDistanceConstants.kp, driveDistanceConstants.ki, driveDistanceConstants.kd, 10, 0, 0, targetDistance, 0.5, 0, Decay);
+
+    //find these 2 using the ratio code in drivercontrol
+    const double leftVelocity = 1.025;
+    const double rightVelocity = 1;
+    double previousMotorOutput = 0;
 
     LeftDrive.resetPosition();
     RightDrive.resetPosition();
 
     do {
-        driveLeftPID.error = driveLeftPID.startError - LeftDrive.position(turns) * (this->wheelDiameter) * M_PI * (this->gearRatio);
-        driveRightPID.error = driveRightPID.startError - RightDrive.position(turns) * (this->wheelDiameter) * M_PI * (this->gearRatio);
+        drivePID.error = drivePID.startError - RightDrive.position(turns) /*+ RightDrive.position(turns))/2*/ * (this->wheelDiameter) * M_PI * (this->gearRatio);
 
-        driveLeftPID.motorOutput = clamp(driveLeftPID.output(), -99.9, 99.9);
-        driveRightPID.motorOutput = clamp(driveRightPID.output(), -99.9, 99.9);
+        drivePID.motorOutput = clamp(drivePID.output(), -80, 80);
         
         /*if((LeftDrive.velocity(pct)) == 0 != (RightDrive.velocity(pct) == 0)) {
             drivePID.motorOutput = 0;
         }*/
             
-        LeftDrive.spin(forward, driveLeftPID.motorOutput, pct);
-        RightDrive.spin(forward, driveRightPID.motorOutput, pct);
+        LeftDrive.spin(forward, rightVelocity/leftVelocity * drivePID.motorOutput, pct);
+        RightDrive.spin(forward, drivePID.motorOutput, pct);
+
+        previousMotorOutput = drivePID.motorOutput; 
 
         std::cout << LeftDrive.position(turns) * (this->wheelDiameter) * M_PI * (this->gearRatio) << ", " << RightDrive.position(turns) * (this->wheelDiameter) * M_PI * (this->gearRatio) << ", " << Inertial.heading() << std::endl;
 
         wait(20, msec);
-    } while(!driveLeftPID.settled() || !driveRightPID.settled());
+    } while(!drivePID.settled());
     
     std::cout << "DrivePID is done!" << std::endl;
     LeftDrive.stop(brake);
@@ -168,30 +172,34 @@ void Drivetrain::driveDistance(double targetDistance) {
 
 //drive a straight line distance slowly
 void Drivetrain::driveDistanceSlow(double targetDistance) {
-    PID driveLeftPID(targetDistance, targetDistance, driveDistanceSlowConstants.kp, driveDistanceSlowConstants.ki, driveDistanceSlowConstants.kd, 10, 0, 0, targetDistance, 1, 0, Decay);
-    PID driveRightPID(targetDistance, targetDistance, driveDistanceSlowConstants.kp, driveDistanceSlowConstants.ki, driveDistanceSlowConstants.kd, 10, 0, 0, targetDistance, 1, 0, Decay);
+    PID drivePID(targetDistance, targetDistance, driveDistanceSlowConstants.kp, driveDistanceSlowConstants.ki, driveDistanceSlowConstants.kd, 10, 0, 0, targetDistance, 0.5, 0, Decay);
+
+    //find these 2 using the ratio code in drivercontrol
+    const double leftVelocity = 1.025;
+    const double rightVelocity = 1;
+    double previousMotorOutput = 0;
 
     LeftDrive.resetPosition();
     RightDrive.resetPosition();
 
     do {
-        driveLeftPID.error = driveLeftPID.startError - LeftDrive.position(turns) * (this->wheelDiameter) * M_PI * (this->gearRatio);
-        driveRightPID.error = driveRightPID.startError - RightDrive.position(turns) * (this->wheelDiameter) * M_PI * (this->gearRatio);
+        drivePID.error = drivePID.startError - RightDrive.position(turns) /*+ RightDrive.position(turns))/2*/ * (this->wheelDiameter) * M_PI * (this->gearRatio);
 
-        driveLeftPID.motorOutput = clamp(driveLeftPID.output(), -99.9, 99.9);
-        driveRightPID.motorOutput = clamp(driveRightPID.output(), -99.9, 99.9);
+        drivePID.motorOutput = clamp(drivePID.output(), -80, 80);
         
         /*if((LeftDrive.velocity(pct)) == 0 != (RightDrive.velocity(pct) == 0)) {
             drivePID.motorOutput = 0;
         }*/
             
-        LeftDrive.spin(forward, driveLeftPID.motorOutput, pct);
-        RightDrive.spin(forward, driveRightPID.motorOutput, pct);
+        LeftDrive.spin(forward, rightVelocity/leftVelocity * drivePID.motorOutput, pct);
+        RightDrive.spin(forward, drivePID.motorOutput, pct);
+
+        previousMotorOutput = drivePID.motorOutput; 
 
         std::cout << LeftDrive.position(turns) * (this->wheelDiameter) * M_PI * (this->gearRatio) << ", " << RightDrive.position(turns) * (this->wheelDiameter) * M_PI * (this->gearRatio) << ", " << Inertial.heading() << std::endl;
 
         wait(20, msec);
-    } while(!driveLeftPID.settled() || !driveRightPID.settled());
+    } while(!drivePID.settled());
     
     std::cout << "DriveSlowPID is done!" << std::endl;
     LeftDrive.stop(brake);
@@ -229,7 +237,7 @@ void Drivetrain::turnToHeading(double targetHeading) {
     do {
         turnPID.error = getTurnError(Inertial.heading(), targetHeading);
 
-        turnPID.motorOutput = clamp(turnPID.output(), -99.9, 99.9);
+        turnPID.motorOutput = clamp(turnPID.output(), -80, 80);
 
         LeftDrive.spin(forward, turnPID.motorOutput, pct);
         RightDrive.spin(reverse, turnPID.motorOutput, pct);
