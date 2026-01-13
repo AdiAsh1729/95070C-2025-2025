@@ -17,6 +17,8 @@ void runIfPressingMotorGroup(motor_group&, controller::button&, controller::butt
 void runIfPressedMotor(motor&, controller::button&, controller::button&, controller::button&, int);
 void runIfPressedMotorGroup(motor_group&, controller::button&, controller::button&, controller::button&, int);
 void runArcadeDrive(motor_group&, motor_group&, inertial&, controller&);
+void rotationTest(double RPM);
+void rotationTest2(double velocity);
 
 void descore_middleGoal();
 void matchload();

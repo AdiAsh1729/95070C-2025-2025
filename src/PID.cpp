@@ -1,6 +1,6 @@
 #include "PID.h"
 
-PID::PID(double startError, double error, double kp, double ki, double kd, double startIntegral, double integral, double derivative, double previousError, double deadband, double motorOutput):
+PID::PID(double startError, double error, double kp, double ki, double kd, double startIntegral, double integral, double derivative, double previousError, double deadband, double motorOutput, IntegralMethod integralMethod):
     startError(startError),
     error(error),
     kp(kp),
@@ -11,39 +11,28 @@ PID::PID(double startError, double error, double kp, double ki, double kd, doubl
     derivative(derivative),
     previousError(previousError),
     deadband(deadband),
-    motorOutput(motorOutput)
+    motorOutput(motorOutput),
+    integralMethod(integralMethod)
 {};
 
 bool PID::settled() {
-    if((std::abs(this->error) < deadband)) { //checks if the absolute value of the error is less than the deadband: in other words, it checks if the robot is close enough
-        return true;
-    }
-
-    else {
-        return false;
-    }
+    return (std::abs(this->error) < deadband);
 };
 
 double PID::output() {
-    this->derivative = (this->previousError - this->error) * 50;
+    this->derivative = (this->error - this->previousError) * 50;
     
     if(std::abs(this->error) < this->startIntegral) {
-        this->integral += (this->error)/50;
+        this->integral += this->error / 50;
     }
 
-    if(getSign(this->error) != getSign(this->startError)) {
-        this->integral = 0;
+    if(integralMethod == Reset) {
+        if(getSign(this->error) != getSign(this->startError)) {
+            this->integral = 0;
+        }
     }
 
     this->previousError = this->error;
 
-    this->motorOutput = this->error * this->kp + this->integral * this->ki + this->derivative * this->kd;
-
-    if(std::abs(this->motorOutput) > 99.9) {
-        return getSign(this->motorOutput) * 99.9;
-    }
-
-    else {
-        return this->motorOutput;
-    }    
+    return this->error * this->kp + this->integral * this->ki - this->derivative * this->kd; 
 };

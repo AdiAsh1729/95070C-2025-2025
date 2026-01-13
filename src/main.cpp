@@ -7,7 +7,7 @@
 
 competition Competition;
 
-Drivetrain chassis(Brain, LeftDrive, RightDrive, Inertial, 0.75, 3.25);
+Drivetrain chassis(Brain, LeftDrive, RightDrive, Inertial, 0.75, 3.25, 100); //100 is a dummy value representing the distance to side of drivetrain
 
 void preAuton(void) {
     vexcodeInit();
@@ -67,39 +67,40 @@ void preAuton(void) {
         wait(20, msec);
         return;
     }
-    
-    vexcodeInit();
 }
 
 void autonomous() {
-        switch(CurrentAuton) {
-            case Null:
-                break;
+    timer autonTimer;
+    autonTimer.clear();
+    switch(CurrentAuton) {
+        case Null:
+            break;
 
-            case RunRightQual:
-                RightQual();
-                break;
+        case RunRightQual:
+            RightQual();
+            break;
 
-            case RunLeftQual:
-                LeftQual();
-                break;
+        case RunLeftQual:
+            LeftQual();
+            break;
 
-            case RunRightElim:
-                RightElim();
-                break;
+        case RunRightElim:
+            RightElim();
+            break;
 
-            case RunLeftElim:
-                LeftElim();
-                break;
+        case RunLeftElim:
+            LeftElim();
+            break;
 
-            case RunSoloAWP:
-                SoloAWP();
-                break;
+        case RunSoloAWP:
+            SoloAWP();
+            break;
 
-            case RunAutonSkills:
-                AutonSkills();
-                break;
-        }
+        case RunAutonSkills:
+            AutonSkills();
+            break;
+    }
+    std::cout << autonTimer.time(msec) << std::endl;
 }
 
 void driverControl() {
@@ -122,6 +123,9 @@ void driverControl() {
 }
 
 int main() {
+    //rotationTest2(10);
+    //rotationTest(200);
+    Matchloader.set(true);
     preAuton(); // Calibrate Inertial sensor, select auton, select driver
     Competition.drivercontrol(driverControl); // If switch is in Driver Control run DriverControl
     Competition.autonomous(autonomous); // If switch is autonomous run autonomous

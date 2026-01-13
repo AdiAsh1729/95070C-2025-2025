@@ -19,3 +19,33 @@ double getTurnError(double heading, double targetHeading) {
         }
     }
 }
+
+double clamp(double input, double minimumValue, double maximumValue) {
+    if(input < minimumValue) {
+        return minimumValue;
+    }
+
+    else if(input > maximumValue) {
+        return maximumValue;
+    }
+
+    else {
+        return input;
+    }
+}
+
+double degreesToRadians(double degrees) {
+    return degrees * M_PI / 180;
+}
+
+double radiansToDegrees(double radians) {
+    return radians * 180 / M_PI;
+}
+
+double getGreaterArcDistance(double headingDelta, double radius, double distanceToSideOfDrivetrain) {
+    return 2 * M_PI * (radius + distanceToSideOfDrivetrain);
+}
+
+double getLesserArcDistance(double headingDelta, double radius, double distanceToSideOfDrivetrain) {
+    return 2 * M_PI * (radius - distanceToSideOfDrivetrain);
+}

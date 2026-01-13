@@ -13,7 +13,6 @@ enum Driver {
     Noob
 };
 
-inline Driver CurrentDriver = Daniel;
 inline bool DriverButtonPressed = false;
 
 void displayDriver();
